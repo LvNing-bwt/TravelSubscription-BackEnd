@@ -1,3 +1,9 @@
 spring:
   profiles:
-    active: dev
+    active: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/travel?useSSL=false&serverTimezone=UTC&characterEncoding=utf8&useUnicode=true&allowPublicKeyRetrieval=true
+    username: root
+    password: ${DATABASE_PASSWORD:}
