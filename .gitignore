@@ -1,24 +1,82 @@
-# Compiled class file
-*.class
+### Maven ###
+target/
+!src/main/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
 
-# Log file
+### IDE ###
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+*.sw?
+.classpath
+.project
+.settings/
+bin/
+
+### Spring Boot ###
+spring-boot-app.log
+logs/
 *.log
+application-*.yml
+application-*.properties
 
-# BlueJ files
-*.ctxt
+# Spring Boot 特定文件
+!/src/main/resources/application.yml
+!/src/main/resources/application.properties
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+### Database ###
+# MySQL 本地开发数据
+*.db
+*.sqlite
+*.mdb
 
-# Package Files #
+# 数据库连接池缓存
+hsqldb/
+
+### MyBatis-Plus ###
+# MyBatis 生成的代码或缓存
+generated-*
+*-codegen/
+
+### Security ###
+# 密钥文件（非常重要！）
+*.key
+*.p12
+*.jks
+*.keystore
+
+# JWT 密钥配置
+jwt-secret.*
+
+### 开发环境配置 ###
+# 本地开发配置文件
+.env
+.local.env
+.env.local
+
+# 开发工具缓存
+heapdump*
+*.hprof
+
+### 系统文件 ###
+.DS_Store
+Thumbs.db
+
+### 临时文件 ###
+tmp/
+temp/
+*.tmp
+*.temp
+
+### 编译文件 ###
+*.class
 *.jar
 *.war
-*.nar
 *.ear
 *.zip
-*.tar.gz
-*.rar
-
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
