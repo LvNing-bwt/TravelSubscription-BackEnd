@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.travel.entity.CompanyProfile;
 
 import java.util.List;
 
@@ -47,11 +48,33 @@ public class CompanyProfileControllerTest {
     @Test
     void testUpdateNickname(){
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(17L,null,
+                new UsernamePasswordAuthenticationToken(1L,null,
                         List.of(new SimpleGrantedAuthority("COMPANY")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         Response<Void> response = companyProfileController.updateNickname("旅行者");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println("=== 响应JSON ===");
+            System.out.println(mapper.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(response));
+        } catch (Exception e) {
+            System.out.println("转换JSON失败: " + e.getMessage());
+        }
+
+
+        assertNotNull(response);
+//        assertNotNull(response.getData());
+    }
+
+    @Test
+    void testUpdateGender(){
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(1L,null,
+                        List.of(new SimpleGrantedAuthority("COMPANY")));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        Response<Void> response = companyProfileController.updateGender(CompanyProfile.Gender.FEMALE);
         ObjectMapper mapper = new ObjectMapper();
         try {
             System.out.println("=== 响应JSON ===");

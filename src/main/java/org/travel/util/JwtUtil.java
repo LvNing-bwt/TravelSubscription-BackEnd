@@ -9,14 +9,15 @@ import java.util.Date;
 
 public class JwtUtil {
 
-    private static final String secret = "travel-subscription-dev-key-2025-for-learning";
-    private static final Long expiration = 604800000L;
+    private static final String secret = "travel-subscription-access-key-2025";
+    private static final Long expiration = 7 * 24 * 60 * 60 * 1000L;
 
     /**
-     * 根据用户ID生成JWT Token
-     * @param uid 用户唯一标识符
-     * @return JWT Token字符串
+     * JWT生成token
+     * @param uid 用户id
+     * @return 返回token字符串
      */
+
     public static String generateToken(Long uid){
         long timeMillis = System.currentTimeMillis();
         return Jwts.builder()
@@ -39,7 +40,15 @@ public class JwtUtil {
      * @param jwtToken 字符串类型token
      * @return 解析出的uid(Long)
      */
-    public static Claims extractJwt(String jwtToken){
+    public static Claims extractAccessTokenJwt(String jwtToken){
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(jwtToken)
+                .getPayload();
+    }
+
+    public static Claims extractRefreshTokenJwt(String jwtToken){
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()

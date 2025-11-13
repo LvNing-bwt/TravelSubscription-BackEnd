@@ -1,6 +1,11 @@
 package org.travel.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jivesoftware.smack.AbstractXMPPConnection;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
+import org.travel.config.OpenfireConfig;
 import org.travel.dto.LoginData;
 import org.travel.dto.LoginRequest;
 import org.travel.entity.CompanyAccount;
@@ -11,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -22,9 +28,11 @@ public class LoginByUsernameService implements LoginService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private XMPPService xmppService;
+
     @Override
     public LoginData login(LoginRequest loginRequest) {
-        log.info("进来了吗？？？用户名:{}",loginRequest.getUsername());
         CompanyAccount account = companyAccountService.findByUsername(loginRequest.getUsername());
         log.info("查询用户名: {}, 结果: {}", loginRequest.getUsername(), account);
 
@@ -43,9 +51,19 @@ public class LoginByUsernameService implements LoginService{
 
         String token = JwtUtil.generateToken(account.getUid());
 
+        xmppService.xmppLogin(account.getUid(), loginRequest.getPassword());
+
         return LoginData.builder()
                 .token(token)
                 .loginTime(LocalDateTime.now())
                 .build();
+    }
+
+    @Override
+    public void autoLogin(Long uid) {
+        CompanyAccount account = companyAccountService.getById(uid);
+        if(account == null) throw LoginException.userNotFound();
+        if(account.getStatus()!= CompanyAccount.AccountStatus.NORMAL)
+            throw LoginException.accountDisabled();
     }
 }

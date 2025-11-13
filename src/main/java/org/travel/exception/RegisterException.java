@@ -4,6 +4,7 @@ public class RegisterException extends AuthException{
 
     public static final String USERNAME_EXISTS = "USERNAME_EXISTS";
     public static final String DATABASE_SAVE_FAILED = "DATABASE_SAVE_FAILED";
+    public static final String XMPP_REGISTER_FAILED = "XMPP_REGISTER_FAILED";
 
     public RegisterException(String errorCode, String message) {
         super(errorCode, message);
@@ -15,5 +16,9 @@ public class RegisterException extends AuthException{
 
     public static RegisterException databaseSaveFailed(){
         return new RegisterException(DATABASE_SAVE_FAILED,"系统繁忙，请稍后重试");
+    }
+
+    public static RegisterException xmppRegisterFailed(){
+        return new RegisterException(XMPP_REGISTER_FAILED,"聊天服务注册失败，请稍后重试");
     }
 }

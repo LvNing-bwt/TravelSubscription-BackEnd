@@ -48,10 +48,9 @@ public class JwtTokenAdminInterceptor extends OncePerRequestFilter {
 
         Long uid;
         try{
-            Claims claims = JwtUtil.extractJwt(token);
+            Claims claims = JwtUtil.extractAccessTokenJwt(token);
             uid = Long.valueOf(claims.getSubject());
             log.info("当前用户id:{}",uid);
-
         } catch (ExpiredJwtException e){
             sendErrorResponse(response, Response.error(Response.Code.UNAUTHORIZED,"token已过期"));
             return;
@@ -86,6 +85,7 @@ public class JwtTokenAdminInterceptor extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request,response);
     }
+
 
     private void sendErrorResponse(HttpServletResponse response, Response<?> errorResponse) throws IOException{
         response.setContentType("application/json;charset=UTF-8");

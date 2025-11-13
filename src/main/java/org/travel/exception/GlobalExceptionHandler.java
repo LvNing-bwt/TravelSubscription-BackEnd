@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
                 code = Response.Code.BAD_REQUEST;
                 userMessage = e.getMessage();
             }
-            case RegisterException.DATABASE_SAVE_FAILED -> {
+            case RegisterException.DATABASE_SAVE_FAILED, RegisterException.XMPP_REGISTER_FAILED -> {
                 code = Response.Code.SERVER_ERROR;
                 userMessage = e.getMessage();
             }
