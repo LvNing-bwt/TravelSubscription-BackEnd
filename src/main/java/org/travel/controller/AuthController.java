@@ -44,4 +44,11 @@ public class AuthController {
         loginService.autoLogin(uid);
         return Response.success(null);
     }
+
+    @PostMapping("/logout")
+    public Response<Void> logout(){
+        Long uid = getCurrentUid();
+        loginService.logout(uid);
+        return Response.success(null);
+    }
 }

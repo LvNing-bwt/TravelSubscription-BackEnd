@@ -44,7 +44,7 @@ public class PubSubNodeInitializer {
         Long rootNodeId = rootNode.getNodeId();
 
         List<Location> provinces = locationMapper.selectByMap(
-                Map.of("level",0,"is_active",true)
+                Map.of("level",1,"is_active",true)
         );
 
         for(Location province : provinces){
@@ -60,7 +60,7 @@ public class PubSubNodeInitializer {
 
             List<Location> cities = locationMapper.selectByMap(
                     Map.of("parent_id",province.getLocationId(),
-                            "level",1,"is_active",true)
+                            "level",2,"is_active",true)
             );
 
             for(Location city : cities){

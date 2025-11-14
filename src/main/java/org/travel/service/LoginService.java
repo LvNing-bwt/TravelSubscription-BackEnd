@@ -7,4 +7,5 @@ import org.travel.dto.LoginRequest;
 public interface LoginService {
     public LoginData login(LoginRequest loginRequest);
     public void autoLogin(Long uid);
+    public void logout(Long uid);
 }

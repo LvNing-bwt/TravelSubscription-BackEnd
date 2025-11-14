@@ -28,8 +28,8 @@ public class CompanyAccountService extends ServiceImpl<CompanyAccountMapper, Com
                                 CompanyProfile::getAddress,
                                 CompanyProfile::getCompanyInfo,
                                 CompanyProfile::getRefreshDays)
-                        .select(Company::getCompanyName,
-                                Company::getCreditCode)
+                        .select(Company::getCompanyName)
+                        .selectAs(Company::getCreditCode, "credit_code")
                         .leftJoin(Company.class,Company::getCompanyId,CompanyAccount::getCompanyId)
                         .leftJoin(CompanyProfile.class,CompanyProfile::getCompanyId,Company::getCompanyId)
                         .eq(CompanyAccount::getUid,uid)

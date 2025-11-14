@@ -2,10 +2,11 @@ package org.travel.dto.vo;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.travel.entity.CompanyProfile;
 
 @Data
-@Builder
+@NoArgsConstructor
 public class CompanyProfileVO {
     private Long uid;
     private String username;

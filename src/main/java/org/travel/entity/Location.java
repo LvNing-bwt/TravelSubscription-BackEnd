@@ -25,8 +25,8 @@ public class Location {
     private Boolean active = true;
 
     enum LocationLevel{
-        PROVINCE(0),
-        CITY(1);
+        PROVINCE(1),
+        CITY(2);
 
         @EnumValue
         private final int code;

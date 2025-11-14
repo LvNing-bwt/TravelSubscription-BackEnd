@@ -66,4 +66,9 @@ public class LoginByUsernameService implements LoginService{
         if(account.getStatus()!= CompanyAccount.AccountStatus.NORMAL)
             throw LoginException.accountDisabled();
     }
+
+    @Override
+    public void logout(Long uid) {
+        xmppService.xmppLogout(uid);
+    }
 }
