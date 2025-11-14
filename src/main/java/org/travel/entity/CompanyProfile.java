@@ -1,5 +1,6 @@
 package org.travel.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,15 +10,12 @@ import lombok.Data;
 @TableName("company_profile")
 public class CompanyProfile {
     @TableId
-    private Long uid;
-    private String username;
-    @TableField("company_name")
-    private String companyName;
-    @TableField("nickname")
-    private String nickName;
-    private String phone;
-    @TableField("legal_person_gender")
-    private Gender gender = Gender.UNKNOWN;
+    @TableField("company_id")
+    private Long companyId;
+    @TableField("contact_person")
+    private String contactPerson;
+    @TableField("company_phone")
+    private String companyPhone;
 
     @TableField("avatar_url")
     private String avatar;
@@ -27,8 +25,7 @@ public class CompanyProfile {
     private String companyInfo;
 
     @TableField("refresh_days")
-    private Integer refreshDays;
-
+    private Integer refreshDays = 7;
     @TableField("business_license_url")
     private String businessLicense;
     @TableField("id_card_front_url")
@@ -39,18 +36,14 @@ public class CompanyProfile {
     @TableField("real_name_verified")
     private Boolean realNameVerified = false;
 
-    public enum Gender{
-        MALE,
-        FEMALE,
-        UNKNOWN
-    };
 
     public CompanyProfile(){
 
     };
 
-    public CompanyProfile(Long uid,String username){
-        this.uid = uid;
-        this.username = username;
+    public CompanyProfile(Long companyId,String contactPerson,String companyPhone){
+        this.companyId = companyId;
+        this.contactPerson = contactPerson;
+        this.companyPhone = companyPhone;
     }
 }

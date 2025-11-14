@@ -1,6 +1,7 @@
 package org.travel.controller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.travel.dto.*;
 import org.travel.service.LoginService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -31,6 +33,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public Response<RegisterData> register(@Valid @RequestBody RegisterRequest registerRequest){
+        log.info("什么情况？");
         RegisterData result = registerService.register(registerRequest);
         return Response.success(result);
     }

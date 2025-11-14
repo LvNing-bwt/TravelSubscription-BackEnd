@@ -9,10 +9,10 @@ import org.travel.entity.CompanyProfile;
 public class CompanyProfileVO {
     private Long uid;
     private String username;
-    private String nickName;
-    private CompanyProfile.Gender gender;
-    private String phone;
+    private String contactPerson;
+    private String companyPhone;
     private String companyName;
+    private String creditCode;
     private String companyAddress;
     private String companyInfo;
     private Integer refreshDays;

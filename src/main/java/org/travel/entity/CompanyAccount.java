@@ -16,6 +16,9 @@ public class CompanyAccount {
     private String email;
     private String phone;
 
+    @TableField("company_id")
+    private Long companyId;
+
     private Role role = Role.COMPANY;
 
     private AccountStatus status = AccountStatus.NORMAL;
@@ -47,8 +50,9 @@ public class CompanyAccount {
     public CompanyAccount(){
     }
 
-    public CompanyAccount(String username,String password){
+    public CompanyAccount(String username,String password,Long companyId){
         this.username = username;
         this.password = password;
+        this.companyId = companyId;
     }
 }

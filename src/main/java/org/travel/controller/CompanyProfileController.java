@@ -31,34 +31,13 @@ public class CompanyProfileController {
         return Response.success(result);
     }
 
-    @PatchMapping("/nickname")
-    public Response<Void> updateNickname(@RequestBody String nickname){
+    @PatchMapping("/company_phone")
+    public Response<Void> updatePhone(@RequestBody String companyPhone){
         Long uid = getCurrentUid();
-        updateProfileService.updateNickname(uid, nickname);
+        updateProfileService.updateCompanyPhone(uid,companyPhone);
         return Response.success(null);
     }
 
-    @PatchMapping("/gender")
-    public Response<Void> updateGender(@RequestBody CompanyProfile.Gender gender){
-        log.info("传进来性别为：{}",gender);
-        Long uid = getCurrentUid();
-        updateProfileService.updateGender(uid,gender);
-        return Response.success(null);
-    }
-
-    @PatchMapping("/phone")
-    public Response<Void> updatePhone(@RequestBody String phone){
-        Long uid = getCurrentUid();
-        updateProfileService.updatePhone(uid,phone);
-        return Response.success(null);
-    }
-
-    @PatchMapping("/company_name")
-    public Response<Void> updateCompanyName(@RequestBody String companyName){
-        Long uid = getCurrentUid();
-        updateProfileService.updateCompanyName(uid, companyName);
-        return Response.success(null);
-    }
 
     @PatchMapping("/company_info")
     public Response<Void> updateCompanyInfo(@RequestBody String companyInfo){
@@ -78,6 +57,13 @@ public class CompanyProfileController {
     public Response<Void> updateRefreshDays(@RequestBody Integer refreshDays){
         Long uid = getCurrentUid();
         updateProfileService.updateRefreshDays(uid, refreshDays);
+        return Response.success(null);
+    }
+
+    @PatchMapping("/contact_person")
+    public Response<Void> updateContactPerson(@RequestBody String contactPerson){
+        Long uid = getCurrentUid();
+        updateProfileService.updateContactPerson(uid,contactPerson);
         return Response.success(null);
     }
 }

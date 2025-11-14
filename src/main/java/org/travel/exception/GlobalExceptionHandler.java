@@ -58,9 +58,8 @@ public class GlobalExceptionHandler {
     }
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response<?>> handleGeneralException(Exception e){
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Response.error(Response.Code.SERVER_ERROR,"系统繁忙请稍后重试"));
+    public ResponseEntity<String> handleException(Exception e) {
+        log.error("全局异常捕获: ", e);
+        return ResponseEntity.status(500).body("服务器错误: " + e.getMessage());
     }
 }

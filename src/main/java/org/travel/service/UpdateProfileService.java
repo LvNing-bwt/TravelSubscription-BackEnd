@@ -2,6 +2,7 @@ package org.travel.service;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import lombok.extern.slf4j.Slf4j;
+import org.travel.entity.CompanyAccount;
 import org.travel.entity.CompanyProfile;
 import org.travel.mapper.CompanyProfileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,31 +16,20 @@ public class UpdateProfileService {
     @Autowired
     private CompanyProfileMapper companyProfileMapper;
 
+    @Autowired
+    private CompanyAccountService companyAccountService;
+
     private void updateProfile(Long uid, Consumer<LambdaUpdateWrapper<CompanyProfile>> updateConsumer){
+        CompanyAccount account = companyAccountService.getById(uid);
         LambdaUpdateWrapper<CompanyProfile> lambdaWrapper = new LambdaUpdateWrapper<>();
-        lambdaWrapper.eq(CompanyProfile::getUid,uid);
+        lambdaWrapper.eq(CompanyProfile::getCompanyId,account.getCompanyId());
         updateConsumer.accept(lambdaWrapper);
         companyProfileMapper.update(null,lambdaWrapper);
     }
 
-    public void updateNickname(Long uid, String nickname){
+    public void updateCompanyPhone(Long uid,String companyPhone){
         updateProfile(uid,wrapper
-                -> wrapper.set(CompanyProfile::getNickName,nickname));
-    }
-
-    public void updateGender(Long uid, CompanyProfile.Gender gender){
-        updateProfile(uid,wrapper
-                -> wrapper.set(CompanyProfile::getGender,gender));
-    }
-
-    public void updatePhone(Long uid,String phone){
-        updateProfile(uid,wrapper
-                -> wrapper.set(CompanyProfile::getPhone,phone));
-    }
-
-    public void updateCompanyName(Long uid,String companyName){
-        updateProfile(uid,wrapper
-                -> wrapper.set(CompanyProfile::getCompanyName,companyName));
+                -> wrapper.set(CompanyProfile::getCompanyPhone,companyPhone));
     }
 
     public void updateCompanyAddress(Long uid,String companyAddress){
@@ -55,5 +45,10 @@ public class UpdateProfileService {
     public void updateRefreshDays(Long uid,Integer refreshDays){
         updateProfile(uid,wrapper
                 -> wrapper.set(CompanyProfile::getRefreshDays,refreshDays));
+    }
+
+    public void updateContactPerson(Long uid,String contactPerson){
+        updateProfile(uid,wrapper
+                -> wrapper.set(CompanyProfile::getContactPerson,contactPerson));
     }
 }
