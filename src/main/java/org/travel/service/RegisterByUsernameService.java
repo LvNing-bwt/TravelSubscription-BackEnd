@@ -14,10 +14,7 @@ import org.travel.config.OpenfireConfig;
 import org.travel.dto.RegisterData;
 import org.travel.dto.RegisterRequest;
 import org.travel.dto.Response;
-import org.travel.entity.Company;
-import org.travel.entity.CompanyAccount;
-import org.travel.entity.CompanyProfile;
-import org.travel.entity.PubSubNode;
+import org.travel.entity.*;
 import org.travel.exception.BusinessException;
 import org.travel.exception.RegisterException;
 import org.travel.exception.SystemConfigException;
@@ -29,6 +26,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.travel.mapper.PubSubNodeMapper;
+import org.travel.mapper.SubscriptionTierMapper;
 
 import java.time.LocalDateTime;
 
@@ -44,6 +42,9 @@ public class RegisterByUsernameService implements RegisterService{
 
     @Autowired
     private CompanyMapper companyMapper;
+
+    @Autowired
+    private SubscriptionTierMapper subscriptionTierMapper;
 
     @Autowired
     private PubSubNodeService pubSubNodeService;
@@ -89,8 +90,12 @@ public class RegisterByUsernameService implements RegisterService{
         }
 
         createCompanyNode(newCompany);
+
+        log.info("03-进入subscription_tiers表的部分");
+        SubscriptionTier subscriptionTier = new SubscriptionTier(newCompany.getCompanyId());
+        subscriptionTierMapper.insert(subscriptionTier);
+
         // 账号
-        log.info("03-进入save companyAccount表的部分");
         CompanyAccount newAccount = new CompanyAccount(
                 registerRequest.getUsername(),
                 encodedPassword,
