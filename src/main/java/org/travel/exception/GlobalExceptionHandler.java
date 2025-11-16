@@ -57,6 +57,24 @@ public class GlobalExceptionHandler {
         return ResponseEntity.ok().body(Response.error(code,userMessage));
     }
 
+    @ExceptionHandler(SubscriptionException.class)
+    public ResponseEntity<Response<?>> handleSubscriptionException(SubscriptionException e){
+        log.warn("节点订阅异常：{} - {}", e.getErrorCode(),e.getMessage());
+
+        String userMessage;
+        Response.Code code;
+        switch (e.getErrorCode()){
+            case SubscriptionException.NO_SUBSCRIPTION_PERMISSION -> {
+                code = Response.Code.FORBIDDEN;
+                userMessage = e.getMessage();
+            }
+            default -> {
+                code = Response.Code.FORBIDDEN;
+                userMessage = "节点订阅异常";
+            }
+        }
+        return ResponseEntity.ok().body(Response.error(code,userMessage));
+    }
 
     public ResponseEntity<String> handleException(Exception e) {
         log.error("全局异常捕获: ", e);

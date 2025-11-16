@@ -1,6 +1,8 @@
 package org.travel.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.travel.dto.CityNodeData;
+import org.travel.dto.ProvinceNodeData;
 import org.travel.dto.Response;
 import org.travel.dto.vo.CompanyProfileVO;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,9 @@ public class CompanyProfileControllerTest {
 
     @Autowired
     private CompanyProfileController companyProfileController;
+
+    @Autowired
+    private SubscriptionController subscriptionController;
 
 
     @Test
@@ -46,46 +51,42 @@ public class CompanyProfileControllerTest {
     }
 
     @Test
-    void testUpdateNickname(){
+    void testGetProvinces(){
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(1L,null,
+                new UsernamePasswordAuthenticationToken(5L,null,
                         List.of(new SimpleGrantedAuthority("COMPANY")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        Response<Void> response = companyProfileController.updateNickname("旅行者");
+        Response<List<ProvinceNodeData>> response = subscriptionController.getProvinceTree();
+
+        assertNotNull(response);
+        assertNotNull(response.getData());
+        // 或者使用JSON格式美化输出
         ObjectMapper mapper = new ObjectMapper();
         try {
-            System.out.println("=== 响应JSON ===");
-            System.out.println(mapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(response));
+            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+            System.out.println("JSON Response:\n" + json);
         } catch (Exception e) {
             System.out.println("转换JSON失败: " + e.getMessage());
         }
-
-
-        assertNotNull(response);
-//        assertNotNull(response.getData());
     }
 
     @Test
-    void testUpdateGender(){
+    void testGetCities() {
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(1L,null,
+                new UsernamePasswordAuthenticationToken(5L,null,
                         List.of(new SimpleGrantedAuthority("COMPANY")));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        Response<Void> response = companyProfileController.updateGender(CompanyProfile.Gender.FEMALE);
+        Response<List<CityNodeData>> response = subscriptionController.getCitiesByProvinceId(112L);
+        assertNotNull(response);
+        assertNotNull(response.getData());
+        // 或者使用JSON格式美化输出
         ObjectMapper mapper = new ObjectMapper();
         try {
-            System.out.println("=== 响应JSON ===");
-            System.out.println(mapper.writerWithDefaultPrettyPrinter()
-                    .writeValueAsString(response));
+            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(response);
+            System.out.println("JSON Response:\n" + json);
         } catch (Exception e) {
             System.out.println("转换JSON失败: " + e.getMessage());
         }
-
-
-        assertNotNull(response);
-//        assertNotNull(response.getData());
     }
 }
